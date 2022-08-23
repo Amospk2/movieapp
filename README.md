@@ -1,16 +1,14 @@
-# movieapp
+# Movie Flutter App
 
-A new Flutter project.
+Projeto de um aplicativo que mostra filmes de uma API, feito em Flutter/Dart. No projeto utilizei de padrões e conceitos como:
 
-## Getting Started
+-  S.O.L.I.D
+-  Asynchronous programming
+-  API
 
-This project is a starting point for a Flutter application.
+## Conhecendo o projeto
 
-A few resources to get you started if this is your first Flutter project:
+O aplicativo em questão consome a API da TheMovieDB e mostra todos os filmes que ela disponibiliza em forma de Json.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [TheMovieDB](https://www.themoviedb.org/)
+- [Curso](https://youtube.com/playlist?list=PLRpTFz5_57cvo0CHf-AnojOvpznz8YO7S)
