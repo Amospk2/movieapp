@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_app/controllers/movie_controller.dart';
-import 'package:movie_app/decoretors/movies_cache_repository_decoretor.dart';
 import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/repository/movies_repository_imp.dart';
 import 'package:movie_app/service/dio_service_imp.dart';
 
-import '../widgets/custom_list_card_carrousel.dart';
+import '../decorators/movies_cache_repository_decorator.dart';
 import '../widgets/custom_list_card_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -40,16 +39,16 @@ class _HomePageState extends State<HomePage> {
               ValueListenableBuilder<MovieModel?>(
                 valueListenable: _controller.movies,
                 builder: (_, movies, __) => movies == null
-                    ? Lottie.asset('assets/lottie.json')
+                    ? Center(child: Lottie.asset('assets/lottie.json'))
                     : TextField(
                         onChanged: _controller.OnChanged,
-                        decoration: InputDecoration(icon: Icon(Icons.search)) ,
+                        decoration: const InputDecoration(icon: Icon(Icons.search)) ,
                       ),
               ),
               ValueListenableBuilder<bool?>(
                 valueListenable: _controller.ErrorFound,
                 builder: (_, error, __) => error == true
-                    ? const Text("Error Found: Please Check You Internet Connection")
+                    ? const Center(child: Text("Error Found: Please Check You Internet Connection"),)
                     : const SizedBox(),
               ),
               const SizedBox(
