@@ -26,31 +26,46 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "MovieApp",
-                style: Theme.of(context).textTheme.headline2,
-                textAlign: TextAlign.left,
-              ),
-              ValueListenableBuilder<MovieModel?>(
-                valueListenable: _controller.movies,
-                builder: (_, movies, __) => movies == null
-                    ? Center(child: Lottie.asset('assets/lottie.json'))
-                    : TextField(
-                        onChanged: _controller.OnChanged,
-                        decoration: const InputDecoration(icon: Icon(Icons.search)) ,
-                      ),
-              ),
               ValueListenableBuilder<bool?>(
-                valueListenable: _controller.ErrorFound,
-                builder: (_, error, __) => error == true
-                    ? const Center(child: Text("Error Found: Please Check You Internet Connection"),)
-                    : const SizedBox(),
-              ),
+                  valueListenable: _controller.ErrorFound,
+                  builder: (_, error, __) {
+                    if (error == true) {
+                      return const Center(
+                        child: Text(
+                            "Error Found: Please Check You Internet Connection"),
+                      );
+                    } else {
+                      return ValueListenableBuilder<MovieModel?>(
+                          valueListenable: _controller.movies,
+                          builder: (_, movies, __) {
+                            if (movies != null) {
+                              return Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 23,
+                                  ),
+                                  Text(
+                                    "MovieApp",
+                                    style:
+                                        Theme.of(context).textTheme.headline2,
+                                  ),
+                                  TextField(
+                                    onChanged: _controller.OnChanged,
+                                    decoration: const InputDecoration(
+                                        icon: Icon(Icons.search)),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
+                                    child: Lottie.asset('assets/lottie.json')),);
+                            }
+                          });
+                    }
+                  }),
               const SizedBox(
                 height: 10,
               ),

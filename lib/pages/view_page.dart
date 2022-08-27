@@ -29,24 +29,29 @@ class ViewPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 24, 24, 41),
+      appBar: AppBar(
+        title: Text(movie.title!),
+        centerTitle: true,
+      ),
       body: Stack(
         children: [
           Hero(
             tag: movie.id!,
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              height: 470,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 color: Color(0xff404040),
               ),
               child: CachedNetworkImage(
                 imageUrl: API.REQUEST_IMG(movie.poster_path!),
-                fit: BoxFit.fill,
+                placeholder: (_, downloadProgress)=> const CircularProgressIndicator(),
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),
           Container(
-            height: 400,
+            height: 470,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
@@ -65,7 +70,7 @@ class ViewPage extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      height: 350,
+                      height: 470,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                               begin: Alignment.bottomCenter,
@@ -167,10 +172,10 @@ class ViewPage extends StatelessWidget {
                                           fontSize: 15, fontFamily: 'Poppins'),
                                       children: <TextSpan>[
                                         TextSpan(
-                                            text: 'Director:',
+                                            text: 'Director: ',
                                             style: TextStyle(
                                                 color: Color(0xff5093C1))),
-                                        TextSpan(text: 'Unknow')
+                                        TextSpan(text: ' Unknow')
                                       ]),
                                 ),
                                 const SizedBox(height: 20),
@@ -180,7 +185,7 @@ class ViewPage extends StatelessWidget {
                                           fontSize: 15, fontFamily: 'Poppins'),
                                       children: <TextSpan>[
                                         TextSpan(
-                                            text: 'Writter:',
+                                            text: 'Writter: ',
                                             style: TextStyle(
                                                 color: Color(0xff5093C1))),
                                         TextSpan(text: 'Unknow')
@@ -232,16 +237,6 @@ class ViewPage extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 0, left: 0, right: 10),
-            child: IconButton(
-              icon: const Icon(
-                Icons.close,
-                size: 35,
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
         ],
       ),
     );
@@ -261,17 +256,15 @@ class ViewPage extends StatelessWidget {
                     ),
                 fullscreenDialog: true)),
         child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            child: Hero(
-              tag: movies[index].id!,
-              child: Image.network(
-                API.REQUEST_IMG(movies[index].poster_path!),
-                loadingBuilder: (_, child, progress) {
-                  if (progress == null) return child;
-                  return const CircularProgressIndicator.adaptive();
-                },
-              ),
-            )),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          child: Image.network(
+            API.REQUEST_IMG(movies[index].poster_path!),
+            loadingBuilder: (_, child, progress) {
+              if (progress == null) return child;
+              return const CircularProgressIndicator.adaptive();
+            },
+          ),
+        ),
       ),
     );
   }

@@ -41,6 +41,7 @@ class CustomListCard extends StatelessWidget {
                 tag: movie.id!,
                 child: CachedNetworkImage(
                     imageUrl: API.REQUEST_IMG(movie.poster_path!),
+                    placeholder: (_, downloadProgress)=> const CircularProgressIndicator(),
                   ),
               ),
             ),
