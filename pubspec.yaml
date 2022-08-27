@@ -17,6 +17,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio:
   url_launcher: ^6.1.5
+  lottie: ^1.4.2
+  shared_preferences:
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +28,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/lottie.json
 
 

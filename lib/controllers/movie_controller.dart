@@ -11,8 +11,23 @@ class MovieController {
   }
 
   ValueNotifier<MovieModel?> movies = ValueNotifier<MovieModel?>(null);
+  ValueNotifier<bool?> ErrorFound = ValueNotifier<bool?>(false);
+  MovieModel? _chaceMovie;
 
   fetch() async {
-    movies.value = await _movieRepository.getMovies();
+    try {
+      movies.value = await _movieRepository.getMovies();
+      _chaceMovie = movies.value;
+    } catch (e) {
+      ErrorFound.value = true;
+    }
   }
+
+  OnChanged(String value) {
+    List<Movie> _list = _chaceMovie!.listMovies
+        .where((e) => e.toString().toLowerCase().contains(value.toLowerCase())).toList();
+
+    movies.value = movies.value!.copyWith(listMovies: _list);
+  }
+
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movie_app/controllers/movie_controller.dart';
+import 'package:movie_app/decoretors/movies_cache_repository_decoretor.dart';
 import 'package:movie_app/models/movie_model.dart';
 import 'package:movie_app/repository/movies_repository_imp.dart';
 import 'package:movie_app/service/dio_service_imp.dart';
-import 'package:movie_app/utils/api.utils.dart';
 
+import '../widgets/custom_list_card_carrousel.dart';
 import '../widgets/custom_list_card_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,47 +17,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final MovieController _controller =
-      MovieController(MoviesRepositoryImp(DioServiceImp()));
-
-  final ScrollController _controllerS = ScrollController();
+  final MovieController _controller = MovieController(
+      MovieCacheRepositoryDecoretor(MoviesRepositoryImp(DioServiceImp())));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Movie App"), centerTitle: true,),
-      body: Padding(
-        padding: EdgeInsets.all(5),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
-              Container(
-                height: 200,
-                child: Scrollbar(
-                  isAlwaysShown: true,
-                controller: _controllerS,
-                    child:ValueListenableBuilder<MovieModel?>(
-                      valueListenable: _controller.movies,
-                      builder: (_, movies, __) {
-                        
-                        return movies != null
-                            ? ListView.separated(
-                              controller: _controllerS,
-                              scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                itemCount: movies.listMovies.length,
-                                itemBuilder: (__, idx) => InkWell(onTap: () => Navigator.of(context).pushNamed('/View', arguments: {'movie': movies.listMovies[idx], 'controller':_controller}),
-                                child: Image.network(API.REQUEST_IMG(movies.listMovies[idx].poster_path)),),
-                                separatorBuilder: (_, __) => SizedBox(width: 10,),
-                              )
-                            : const Center(child: CircularProgressIndicator());
-                      },
-                    ),
-                ),
+              const SizedBox(
+                height: 10,
               ),
-              SizedBox(height: 10,),
+              Text(
+                "MovieApp",
+                style: Theme.of(context).textTheme.headline2,
+                textAlign: TextAlign.left,
+              ),
+              ValueListenableBuilder<MovieModel?>(
+                valueListenable: _controller.movies,
+                builder: (_, movies, __) => movies == null
+                    ? Lottie.asset('assets/lottie.json')
+                    : TextField(
+                        onChanged: _controller.OnChanged,
+                        decoration: InputDecoration(icon: Icon(Icons.search)) ,
+                      ),
+              ),
+              ValueListenableBuilder<bool?>(
+                valueListenable: _controller.ErrorFound,
+                builder: (_, error, __) => error == true
+                    ? const Text("Error Found: Please Check You Internet Connection")
+                    : const SizedBox(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               ValueListenableBuilder<MovieModel?>(
                 valueListenable: _controller.movies,
                 builder: (_, movies, __) {
@@ -64,10 +63,12 @@ class _HomePageState extends State<HomePage> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: movies.listMovies.length,
-                          itemBuilder: (__, idx) => CustomListCard(movie:movies.listMovies[idx], controllerM: _controller),
-                          separatorBuilder: (_, __) => Divider(),
+                          itemBuilder: (__, idx) => CustomListCard(
+                              movie: movies.listMovies[idx],
+                              controllerM: _controller),
+                          separatorBuilder: (_, __) => const Divider(),
                         )
-                      : const Center(child: CircularProgressIndicator());
+                      : const SizedBox();
                 },
               ),
             ],
