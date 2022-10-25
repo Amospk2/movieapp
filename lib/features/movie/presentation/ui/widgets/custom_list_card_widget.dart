@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../../../core/utils/api.utils.dart';
 import '../../../domain/entities/movie_details_entity.dart';
 import '../../controllers/movie_controller.dart';
 import '../pages/view_page.dart';
 
-import '../../../../core/utils/api.utils.dart';
 
 class CustomListCard extends StatelessWidget {
   final MovieDetailsEntity movie;

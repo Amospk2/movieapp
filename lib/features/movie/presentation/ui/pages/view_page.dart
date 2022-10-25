@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/utils/api.utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../core/utils/api.utils.dart';
 import '../../../domain/entities/movie_details_entity.dart';
 
 class ViewPage extends StatelessWidget {
