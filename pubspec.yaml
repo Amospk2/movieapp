@@ -20,6 +20,8 @@ dependencies:
   lottie: ^1.4.2
   shared_preferences:
   cached_network_image:
+  dartz:
+  get_it:
 
 dev_dependencies:
   flutter_test:

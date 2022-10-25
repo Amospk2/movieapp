@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/pages/home_page.dart';
+import 'package:movie_app/core/inject/inject.dart';
+import 'features/presentation/ui/pages/home_page.dart';
 
 void main() {
-  runApp(MyApp());
+  Inject.initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
